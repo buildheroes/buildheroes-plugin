@@ -1,31 +1,38 @@
 package org.jenkinsci.plugins.buildheroes;
 
-import java.io.InputStream;
+import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 
 
 public class Post {
-    public static void sendMessage(String token){
-        String url = "http://buildheroes.dev/api/projects/" + token + "/builds";
-        InputStream in = null;
 
+	private final static Logger log = Logger.getLogger(Post.class.getName());
+	
+	public static void sendMessage(String token, String payload){
+        
+		String url = "http://localhost:1234/api/projects/" + token + "/builds";
+		String responseBody = "";
+		
         try {
             HttpClient client = new HttpClient();
             PostMethod method = new PostMethod(url);
+			method.setRequestHeader("Content-Type", "application/json");
 
-            //Add any parameter if u want to send it with Post req.
-            method.addParameter("p", "apple");
-
+            method.addParameter("payload", payload);
+            
+            log.info("Sending a post message to " + url + " now.");
             int statusCode = client.executeMethod(method);
 
             if (statusCode != -1) {
-                in = method.getResponseBodyAsStream();
+                responseBody = method.getResponseBodyAsString();
             }
+            
+            log.info("Message has been sent, response body is: " + responseBody);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.severe(e.getMessage() + " STACKTRACE: " + e.getStackTrace().toString());
         }
 
     }
