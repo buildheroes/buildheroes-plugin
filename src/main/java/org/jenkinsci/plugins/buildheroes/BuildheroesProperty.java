@@ -2,10 +2,8 @@ package org.jenkinsci.plugins.buildheroes;
 
 import hudson.Extension;
 import hudson.model.JobProperty;
-import hudson.model.AbstractProject;
 import hudson.model.JobPropertyDescriptor;
-import hudson.model.Descriptor.FormException;
-
+import hudson.model.AbstractProject;
 import net.sf.json.JSONObject;
 
 import org.kohsuke.stapler.DataBoundConstructor;

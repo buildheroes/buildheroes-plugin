@@ -20,12 +20,8 @@ import hudson.model.Run;
 import hudson.scm.ChangeLogSet;
 import hudson.scm.ChangeLogSet.Entry;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Logger;
-
-import jenkins.model.Jenkins;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
@@ -44,7 +40,6 @@ public enum Phase {
 		BuildheroesProperty property = (BuildheroesProperty) run.getParent().getProperty(BuildheroesProperty.class);
 		if (property != null) {
 			String token = property.getToken();
-			String url;
 			if(token != null){
 				
 				String payload = payloadAsJson(run, status);
@@ -86,16 +81,13 @@ public enum Phase {
 		 * 
 		 */
 		
-		// ditt funktioniert noch nicht!!
 		jsonModel.put("build_url", Hudson.getInstance().getRootUrl() + build.getUrl());
-		
 		
 		jsonModel.put("build_number", build.getNumber());
 		jsonModel.put("result", status);
 		jsonModel.put("started_at", run.getTime());
 		jsonModel.put("finished_at", getFinishedTime(run));
 		
-		// ditt funktioniert vielleicht!!
 		jsonModel.put("latest_commit", getLatestCommitInfo(build.getChangeSet()));
 
 		return jsonConverter.toJson(jsonModel);
