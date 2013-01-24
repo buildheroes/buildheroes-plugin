@@ -14,19 +14,9 @@
 package org.jenkinsci.plugins.buildheroes;
 
 import hudson.model.TaskListener;
-import hudson.model.AbstractBuild;
-import hudson.model.Hudson;
 import hudson.model.Run;
-import hudson.scm.ChangeLogSet;
-import hudson.scm.ChangeLogSet.Entry;
 
-import java.util.HashMap;
 import java.util.logging.Logger;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
-
-import com.google.gson.Gson;
 
 
 public enum Phase {
@@ -41,87 +31,12 @@ public enum Phase {
 		if (property != null) {
 			String token = property.getToken();
 			if(token != null){
-				
-				String payload = payloadAsJson(run, status);
+				Payload payload = new Payload(run, status);
 				log.info("Token: "   + token);
-				log.info("Payload: " + payload);
+				log.info("Payload: " + payload.asJson());
 				
-				Post.sendMessage(token, payload);
+				Post.sendMessage(token, payload.asJson());
 			}
 		}
-	}
-
-	private String payloadAsJson(Run run, String status) {
-		
-		// just to have a build instance beside the run
-		AbstractBuild build = (AbstractBuild) run;
-		
-		Gson jsonConverter = new Gson();
-		HashMap<String, Object> jsonModel = new HashMap<String, Object>();
-		
-		/**
-		 * 
-		 * JSON shall look like this:
-		 * 
-		 * {
-			 Ê"build_url": "https://some-jenkins.com/bla",
-			 Ê"build_number": "unique_build_number",
-			 Ê"result": "success/failed",
-			 Ê"started_at": "2013-01-23 T17:34:13+01:00",
-			 Ê"finished_at": "2013-01-23 T17:41:43+01:00",
-			 Ê"latest_commit": {
-			 Ê Ê"id": "5eec2c0c8a2f49ef5bfc774677b7392c0ea6037d",
-			 Ê Ê"url": "https://github.com/thyphoon/buildheroes/commit/5eec2c0c8a2f49ef5bfc774677b7392c0ea6037d",
-			 Ê Ê"author_name": "Andi Bade",
-			 Ê Ê"author_email": "andi@galaxycats.com",
-			 Ê Ê"message": "added owner to projects",
-			 Ê Ê"timestamp": "2012-11-8T17:33:47+01:00"
-			 Ê}
-			}
-		 * 
-		 */
-		
-		jsonModel.put("build_url", Hudson.getInstance().getRootUrl() + build.getUrl());
-		
-		jsonModel.put("build_number", build.getNumber());
-		jsonModel.put("result", status);
-		jsonModel.put("started_at", run.getTime());
-		jsonModel.put("finished_at", getFinishedTime(run));
-		
-		jsonModel.put("latest_commit", getLatestCommitInfo(build.getChangeSet()));
-
-		return jsonConverter.toJson(jsonModel);
-	}
-
-	private Object getLatestCommitInfo(ChangeLogSet<Entry> changeSet) {
-		Entry latestEntry;
-		log.info("Size of ChangeLogSet: " + changeSet.getItems().length);
-		if(!changeSet.isEmptySet()) {
-			latestEntry = (Entry) changeSet.getItems()[0];
-			for (Entry entry : changeSet) {
-				if(entry.getTimestamp() > latestEntry.getTimestamp()) {
-					latestEntry = entry;
-				}
-			}			
-		} else return "";
-		
-		return createLatestCommitInfoMap(latestEntry);
-	}
-
-	private HashMap<String, String> createLatestCommitInfoMap(Entry entry) {
-		HashMap<String, String> commitInfosMap = new HashMap<String, String>();
-		
-		commitInfosMap.put("id", entry.getCommitId());
-		commitInfosMap.put("author", entry.getAuthor().getDisplayName());
-		commitInfosMap.put("timestamp", new DateTime(entry.getTimestamp()).toString(ISODateTimeFormat.dateTime()));
-		commitInfosMap.put("message", entry.getMsg());
-		
-		return commitInfosMap;
-	}
-	
-	private Object getFinishedTime(Run run) {
-		long finishedAt = run.getTimeInMillis()+run.getDuration();
-		DateTime time = new DateTime(finishedAt);
-		return time.toString(ISODateTimeFormat.dateTime());
 	}
 }
