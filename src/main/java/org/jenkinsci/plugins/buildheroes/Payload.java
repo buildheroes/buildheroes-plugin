@@ -29,7 +29,7 @@ public class Payload {
 	
 	private Run run;
 	private String status;
-	AbstractBuild build;
+	private AbstractBuild build;
 	
 	public Payload(Run run, String status) {
 		this.run = run;
@@ -42,28 +42,6 @@ public class Payload {
 		
 		Gson jsonConverter = new Gson();
 		HashMap<String, Object> jsonModel = new HashMap<String, Object>();
-
-		/**
-		 * 
-		 * JSON shall look like this:
-		 * 
-		 * {
-			 Ê"build_url": "https://some-jenkins.com/bla",
-			 Ê"build_number": "unique_build_number",
-			 Ê"result": "success/failed",
-			 Ê"started_at": "2013-01-23 T17:34:13+01:00",
-			 Ê"finished_at": "2013-01-23 T17:41:43+01:00",
-			 Ê"latest_commit": {
-			 Ê Ê"id": "5eec2c0c8a2f49ef5bfc774677b7392c0ea6037d",
-			 Ê Ê"url": "https://github.com/thyphoon/buildheroes/commit/5eec2c0c8a2f49ef5bfc774677b7392c0ea6037d",
-			 Ê Ê"author_name": "Andi Bade",
-			 Ê Ê"author_email": "andi@galaxycats.com",
-			 Ê Ê"message": "added owner to projects",
-			 Ê Ê"timestamp": "2012-11-8T17:33:47+01:00"
-			 Ê}
-			}
-		 * 
-		 */
 		
 		jsonModel.put("build_url", Hudson.getInstance().getRootUrl() + build.getUrl());
 		

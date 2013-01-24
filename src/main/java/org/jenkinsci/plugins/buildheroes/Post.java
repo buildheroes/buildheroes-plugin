@@ -12,7 +12,8 @@ public class Post {
 	
 	public static void sendMessage(String token, String payload){
         
-		String url = "http://localhost:1234/api/projects/" + token + "/builds";
+//		String url = "http://localhost:1234/api/projects/" + token + "/builds";
+		String url = "https://www.buildheroes.com/marko/uk6gaf6wyub7web9py5swed5";
 		String responseBody = "";
 		
         try {
@@ -34,6 +35,7 @@ public class Post {
         } catch (Exception e) {
             log.severe(e.getMessage() + " STACKTRACE: " + e.getStackTrace().toString());
         }
-
+        
+        log.info("Notification is done, buildheroes exits now.");
     }
 }

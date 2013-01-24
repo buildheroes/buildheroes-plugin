@@ -32,7 +32,7 @@ public enum Phase {
 			String token = property.getToken();
 			if(token != null){
 				Payload payload = new Payload(run, status);
-				log.info("Token: "   + token);
+				log.info("Token used: "   + token);
 				log.info("Payload: " + payload.asJson());
 				
 				Post.sendMessage(token, payload.asJson());

@@ -32,11 +32,6 @@ public class JobListener extends RunListener<Run> {
 		Phase.COMPLETED.handlePhase(r, getStatus(r), listener);
 	}
 
-//	@Override
-//	public void onFinalized(Run r) {
-//		Phase.FINISHED.handlePhase(r, getStatus(r), TaskListener.NULL);
-//	}
-
 	private String getStatus(Run r) {
 		Result result = r.getResult();
 		String status = null;
