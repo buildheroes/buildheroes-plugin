@@ -10,8 +10,9 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
 public class BuildheroesProperty extends JobProperty<AbstractProject<?, ?>> {
-	
-	private final String token;
+
+	// private final String token;
+	final public String token;
 
 	@DataBoundConstructor
  	public BuildheroesProperty(String token) {
@@ -21,40 +22,11 @@ public class BuildheroesProperty extends JobProperty<AbstractProject<?, ?>> {
 	public String getToken() {
 		return token;
 	}
-	
-	@Override
+
+	// @Override
 	public BuildheroesPropertyDescriptor getDescriptor() {
-		return new BuildheroesPropertyDescriptor();
+		// return new BuildheroesPropertyDescriptor();
+		return (BuildheroesPropertyDescriptor) super.getDescriptor();
 	}
 
-	@Extension
-	public static final class BuildheroesPropertyDescriptor extends JobPropertyDescriptor {
-		
-		private String token;
-		
-		public BuildheroesPropertyDescriptor() {
-			super(BuildheroesProperty.class);
-			load();
-		}
-
-		public String getDisplayName() {
-			return "Buildheroes Notification";
-		}
-
-		@Override
-		public boolean configure(StaplerRequest req, JSONObject formData)
-				throws FormException {
-			setToken(formData.getString("token"));
-			save();
-			return super.configure(req, formData);
-		}
-
-		public String getToken() {
-			return token;
-		}
-
-		public void setToken(String token) {
-			this.token = token;
-		}
-	}
 }

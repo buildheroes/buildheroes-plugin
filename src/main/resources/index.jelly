@@ -2,5 +2,5 @@
   This view is used to render the installed plugins page.
 -->
 <div>
-  Sends the result of every build to the specified project at Buildheroes. Buildheroes is a tool which raises the level of motivation you have to keep your build green.
+  Sends the result of every build to the specified project at <a href="https://www.buildheroes.com" target="_blank">Buildheroes</a>. <a href="https://www.buildheroes.com" target="_blank">Buildheroes</a> is a tool which raises the level of motivation you have to keep your build green.
 </div>
