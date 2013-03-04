@@ -2,5 +2,5 @@
   This view is used to render the installed plugins page.
 -->
 <div>
-  This plugin is a sample to explain how to write a Jenkins plugin.
+  Sends the result of every build to the specified project at Buildheroes. Buildheroes is a tool which raises the level of motivation you have to keep your build green.
 </div>
