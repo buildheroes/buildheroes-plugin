@@ -34,19 +34,4 @@ public final class BuildheroesPropertyDescriptor extends JobPropertyDescriptor {
     return true;
   }
 
-  // @Override
-  // public boolean configure(StaplerRequest req, JSONObject formData)
-  //    throws FormException {
-  //  setToken(formData.getString("token"));
-  //  save();
-  //  return super.configure(req, formData);
-  // }
-
-  // public String getToken() {
-  //  return token;
-  // }
-
-  // public void setToken(String token) {
-  //  this.token = token;
-  // }
 }

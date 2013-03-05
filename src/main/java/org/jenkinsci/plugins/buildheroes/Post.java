@@ -3,7 +3,9 @@ package org.jenkinsci.plugins.buildheroes;
 import java.util.logging.Logger;
 
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 
 
 public class Post {
@@ -20,7 +22,8 @@ public class Post {
             PostMethod method = new PostMethod(url);
 			method.setRequestHeader("Content-Type", "application/json");
 
-            method.addParameter("payload", payload);
+            StringRequestEntity entity = new StringRequestEntity(payload);
+            method.setRequestEntity(entity);
 
             log.info("Sending a post message to " + url + " now.");
             int statusCode = client.executeMethod(method);
