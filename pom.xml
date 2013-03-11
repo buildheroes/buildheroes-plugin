@@ -12,7 +12,7 @@
 	<url>https://wiki.jenkins-ci.org/display/JENKINS/Buildheroes</url>
 	<groupId>org.jenkins-ci.plugins</groupId>
 	<artifactId>buildheroes</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>hpi</packaging>
 
 	<scm>
